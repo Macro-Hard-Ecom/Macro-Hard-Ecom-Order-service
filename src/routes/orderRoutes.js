@@ -25,7 +25,7 @@ router.get('/orders', getOrders);
 /**
  * @swagger
  * /api/orders/order/:id:
- *   post:
+ *   get:
  *     summary: Get order by Id
  *     tags: [Orders]
  */

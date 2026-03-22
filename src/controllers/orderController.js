@@ -42,3 +42,13 @@ exports.createOrder = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+
+exports.getOrders = async (req, res) => {
+  const orders = await Order.find();
+  res.json(orders);
+};
+
+exports.getOrderById = async (req, res) => {
+  const order = await Order.findById(req.params.id);
+  res.json(order);
+};

@@ -10,7 +10,7 @@ const options = {
     },
     servers: [
       { url: 'http://localhost:5000' },
-      { url: 'http://YOUR-EC2-IP:5000' },
+      { url: 'http://51.21.181.2:5000' },
     ],
     components: {
       securitySchemes: {

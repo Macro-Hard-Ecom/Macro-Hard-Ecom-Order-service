@@ -9,13 +9,19 @@ const options = {
       description: 'Order Service for E-Commerce Microservices System',
     },
     servers: [
-      {
-        url: 'http://localhost:5000',
-      },
-      {
-        url: 'http://<your-ec2-ip>:5000',
-      },
+      { url: 'http://localhost:5000' },
+      { url: 'http://YOUR-EC2-IP:5000' },
     ],
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+        },
+      },
+    },
+    security: [{ bearerAuth: [] }],
   },
   apis: ['./src/routes/*.js'],
 };

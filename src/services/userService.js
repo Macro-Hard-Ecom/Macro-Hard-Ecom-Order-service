@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-const USER_SERVICE_URL = "http://54.254.157.28:8080";
+const USER_SERVICE_URL = process.env.USER_SERVICE_URL;
 
 const validateUser = async (token) => {
   try {

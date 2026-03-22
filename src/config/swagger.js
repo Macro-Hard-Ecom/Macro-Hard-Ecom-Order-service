@@ -10,11 +10,11 @@ const options = {
     },
     servers: [
   {
-    url: 'http://localhost:5000',
+     url: process.env.LOCAL_URL,
     description: 'Local server',
   },
   {
-    url: 'http://51.21.181.2:5000',
+    url: process.env.BASE_URL,
     description: 'AWS EC2 server',
   },
 ],

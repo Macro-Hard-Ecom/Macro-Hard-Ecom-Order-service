@@ -52,8 +52,29 @@ exports.createOrder = async (req, res) => {
 };
 
 exports.getOrders = async (req, res) => {
-  const orders = await Order.find();
-  res.json(orders);
+  try {
+    const token = req.headers.authorization?.split(" ")[1];
+
+    if (!token) {
+      return res.status(401).json({ message: "No token provided" });
+    }
+
+    // validate user
+    await validateUser(token);
+
+    // decode token
+    const decoded = jwt.decode(token);
+    const userId = decoded.sub;
+
+    // filter by user
+    const orders = await Order.find({ userId }).sort({ createdAt: -1 });
+
+    res.json(orders);
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: err.message });
+  }
 };
 
 exports.getOrderById = async (req, res) => {

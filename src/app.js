@@ -7,7 +7,7 @@ const helmet = require('helmet');
 
 const app = express();
 
-const allowedOrigins = process.env.ALLOWED_ORIGINS.split(',');
+const allowedOrigins = (process.env.ALLOWED_ORIGINS || 'http://localhost:3000,http://51.21.181.2:5000').split(',');
 
 app.use(
   cors({

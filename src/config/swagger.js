@@ -9,9 +9,15 @@ const options = {
       description: 'Order Service for E-Commerce Microservices System',
     },
     servers: [
-      { url: 'http://localhost:5000' },
-      { url: 'http://51.21.181.2:5000' },
-    ],
+  {
+    url: 'http://localhost:5000',
+    description: 'Local server',
+  },
+  {
+    url: 'http://51.21.181.2:5000',
+    description: 'AWS EC2 server',
+  },
+],
     components: {
       securitySchemes: {
         bearerAuth: {

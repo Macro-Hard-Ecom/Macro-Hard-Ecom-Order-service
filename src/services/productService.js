@@ -10,7 +10,7 @@ const getProduct = async (id, token) => {
       },
     }
   );
-  return res.data;
+  return res.data.data;
 };
 
 module.exports = { getProduct };

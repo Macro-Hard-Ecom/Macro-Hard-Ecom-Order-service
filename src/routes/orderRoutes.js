@@ -5,7 +5,8 @@ const {
   getOrders,
   getOrderById,
   getProductStats,
-  updateOrderStatus ,
+  updateOrderStatus,
+  getUserOrderCount,
 } = require('../controllers/orderController');
 
 /**
@@ -108,4 +109,21 @@ router.get('/product-stats/:productId', getProductStats);
 
 router.put('/order/:id/status', updateOrderStatus);
 
+/**
+ * @swagger
+ * /api/orders/user/{userId}/count:
+ *   get:
+ *     summary: Get total number of orders by user
+ *     tags: [Orders]
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Total order count
+ */
+router.get('/user/:userId/count', getUserOrderCount);
 module.exports = router;

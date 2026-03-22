@@ -145,3 +145,21 @@ exports.updateOrderStatus = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+
+exports.getUserOrderCount = async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+   
+    const count = await Order.countDocuments({ userId });
+
+    res.json({
+      userId,
+      totalOrders: count,
+    });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: err.message });
+  }
+};

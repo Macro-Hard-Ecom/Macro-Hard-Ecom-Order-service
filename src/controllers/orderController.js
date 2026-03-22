@@ -5,11 +5,18 @@ const jwt = require('jsonwebtoken');
 
 exports.createOrder = async (req, res) => {
   try {
+    //Extract token
     const token = req.headers.authorization?.split(" ")[1];
 
-   
+    // Check if token exists
+    if (!token) {
+      return res.status(401).json({ message: "No token provided" });
+    }
+
+    // Validate user
     await validateUser(token);
 
+    //Decode token
     const decoded = jwt.decode(token);
     const userId = decoded.sub;
 
@@ -26,13 +33,13 @@ exports.createOrder = async (req, res) => {
         quantity: item.quantity,
       });
 
-      total += product.price * item.quantity; 
+      total += product.price * item.quantity;
     }
 
     const order = await Order.create({
-      userId, 
+      userId,
       items,
-      totalAmount: total, 
+      totalAmount: total,
     });
 
     res.status(201).json(order);

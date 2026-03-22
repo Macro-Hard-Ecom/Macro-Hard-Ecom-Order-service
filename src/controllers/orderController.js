@@ -12,7 +12,7 @@ exports.createOrder = async (req, res) => {
     const items = [];
 
     for (let item of req.body.items) {
-      const product = await getProduct(item.productId);
+      const product = await getProduct(item.productId, token);
 
       items.push({
         productId: product._id,

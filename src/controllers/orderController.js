@@ -2,6 +2,7 @@ const Order = require('../models/order.js');
 const { validateUser } = require('../services/userService');
 const { getProduct } = require('../services/productService');
 const jwt = require('jsonwebtoken');
+const mongoose = require('mongoose');
 
 exports.createOrder = async (req, res) => {
   try {
@@ -58,4 +59,54 @@ exports.getOrders = async (req, res) => {
 exports.getOrderById = async (req, res) => {
   const order = await Order.findById(req.params.id);
   res.json(order);
+};
+
+
+exports.getProductStats = async (req, res) => {
+  try {
+    const { productId } = req.params;
+
+    // Validate ID
+    if (!mongoose.Types.ObjectId.isValid(productId)) {
+      return res.status(400).json({ message: "Invalid product ID" });
+    }
+
+    // Aggregate data
+    const result = await Order.aggregate([
+      { $unwind: "$items" }, // split items array
+      {
+        $match: {
+          "items.productId": new mongoose.Types.ObjectId(productId),
+        },
+      },
+      {
+        $group: {
+          _id: "$items.productId",
+          totalQuantity: { $sum: "$items.quantity" },
+          totalRevenue: {
+            $sum: { $multiply: ["$items.price", "$items.quantity"] },
+          },
+        },
+      },
+    ]);
+
+    // If no orders found
+    if (result.length === 0) {
+      return res.json({
+        productId,
+        totalQuantity: 0,
+        totalRevenue: 0,
+      });
+    }
+
+    res.json({
+      productId,
+      totalQuantity: result[0].totalQuantity,
+      totalRevenue: result[0].totalRevenue,
+    });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: err.message });
+  }
 };

@@ -4,6 +4,7 @@ const {
   createOrder,
   getOrders,
   getOrderById,
+  getProductStats,
 } = require('../controllers/orderController');
 
 /**
@@ -63,5 +64,22 @@ router.get('/orders', getOrders);
  *         description: Order details
  */
 router.get('/order/:id', getOrderById);
+/**
+ * @swagger
+ * /api/orders/product-stats/{productId}:
+ *   get:
+ *     summary: Get total ordered quantity and revenue for a product
+ *     tags: [Orders]
+ *     parameters:
+ *       - in: path
+ *         name: productId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Product stats retrieved
+ */
+router.get('/product-stats/:productId', getProductStats);
 
 module.exports = router;

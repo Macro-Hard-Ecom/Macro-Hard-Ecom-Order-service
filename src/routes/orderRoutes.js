@@ -5,6 +5,7 @@ const {
   getOrders,
   getOrderById,
   getProductStats,
+  updateOrderStatus ,
 } = require('../controllers/orderController');
 
 /**
@@ -81,5 +82,30 @@ router.get('/order/:id', getOrderById);
  *         description: Product stats retrieved
  */
 router.get('/product-stats/:productId', getProductStats);
+
+/**
+ * @swagger
+ * /api/orders/order/{id}/status:
+ *   put:
+ *     summary: Update order status
+ *     tags: [Orders]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           example:
+ *             status: "Delivered"
+ *     responses:
+ *       200:
+ *         description: Order updated successfully
+ */
+
+router.put('/order/:id/status', updateOrderStatus);
 
 module.exports = router;

@@ -7,11 +7,18 @@ const validateUser = async (token) => {
     const res = await axios.get(
       `${USER_SERVICE_URL}/api/auth/validateToken`,
       {
-        headers: { Authorization: `Bearer ${token}` },
+        params: { token }, 
       }
     );
-    return res.data;
+
+    if (res.data === true) {
+      return { userId: "validated-user" }; 
+    } else {
+      throw new Error("Invalid token");
+    }
+
   } catch (err) {
+    console.error("User validation error:", err.message);
     throw new Error("User validation failed");
   }
 };

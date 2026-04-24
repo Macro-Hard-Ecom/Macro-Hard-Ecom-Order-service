@@ -9,6 +9,7 @@ const app = express();
 
 const allowedOrigins = (process.env.ALLOWED_ORIGINS || 'http://localhost:3000,http://13.51.162.195:5000').split(',');
 
+
 app.use(
   cors({
     origin: function (origin, callback) {
